@@ -1,0 +1,35 @@
+terraform{
+required_providers{
+azurerm={
+source="hashicorp/azurerm"
+version="3.115.0"
+}
+}
+backend "azurerm"{
+resource_group_name="rg1"
+storage_account_name="stg1"
+container_name="backend"
+key="dev.terraform.tfstate"
+}
+
+}
+
+provider "azurerm"{
+
+features{}
+
+}
+
+resoure "azurerm_resource_group" "rgs"{
+name="rg1"
+location="westus"
+}
+
+resource "azurerm_storage_account" "stg"{
+for_each=var.
+name="stg1"
+resource_group_name="rg1"
+location="westus"
+account_tier="Standard"
+account_replication_type="LRS"
+}

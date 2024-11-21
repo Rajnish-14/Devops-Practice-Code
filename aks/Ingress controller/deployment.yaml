@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingress-deplomment
+spec:
+  selector:
+    matchLabels:
+      app: ingress-deplomment
+  template:
+    metadata:
+      labels:
+        app: ingress-deplomment
+    spec:
+      containers:
+      - name: ingress-deplomment
+        image: nginx
+        ports:
+        - containerPort: 80

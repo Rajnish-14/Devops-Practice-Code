@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: dhondhu_pod
+spec:
+ containers:
+  - name: netflis-container
+    image: devopsinsiders/netflix-clone
+    ports:
+    - containerPort: 80

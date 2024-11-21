@@ -1,0 +1,60 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: init
+    displayName: initialition
+    jobs:
+      - job: init
+        displayName: terraforminit
+        steps:
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              backendServiceArm: 'rajnish-pipline-connection'
+              backendAzureRmResourceGroupName: 'dev-vm-rg'
+              backendAzureRmStorageAccountName: 'pipelinestorage1234'
+              backendAzureRmContainerName: 'newinfrapipe'
+              backendAzureRmKey: 'dev.terraform.tfstate'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              environmentServiceNameAzureRM: 'rajnish-pipline-connection'
+  - stage: manualvaliadtion
+    displayName: maunalvalidation
+    pool: server
+    jobs:
+      - job: mannualvalidation
+        displayName: validation
+        steps:
+          - task: ManualValidation@1
+            inputs:
+              notifyUsers: 'rajnish.s44@gmail.com'
+              instructions: 'approve it'
+  - stage: apply
+    displayName: apply
+    jobs:
+      - job: apply
+        displayName: apply
+        steps:
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              backendServiceArm: 'rajnish-pipline-connection'
+              backendAzureRmResourceGroupName: 'dev-vm-rg'
+              backendAzureRmStorageAccountName: 'pipelinestorage1234'
+              backendAzureRmContainerName: 'newinfrapipe'
+              backendAzureRmKey: 'dev.terraform.tfstate'
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'rajnish-pipline-connection'

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rajnish-deploymemt
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rajnish-deploymemt
+  template:
+    metadata:
+      labels:
+        app: rajnish-deploymemt
+    spec:
+      containers:
+      - name: rajnish-deploymemt
+        image: nginx
+        ports:
+        - containerPort: 80

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-rajnish
+  labels:
+    app: myapp
+    key: replicalabel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      key: replicalabel
+  template:
+    metadata:
+      labels:
+        key: replicalabel
+    spec:
+      containers:
+        - name: myappnginx
+          image: nginx
+          ports: 
+          - containerPort: 80

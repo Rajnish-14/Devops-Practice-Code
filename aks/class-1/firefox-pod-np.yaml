@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: firefox-pod
+  namespace: default
+  labels:
+    networkrule: blockaccess
+spec:
+  containers:
+  - image: linuxserver/firefox
+    name:  firefox-container
+    ports: 
+    - containerPort: 3000
